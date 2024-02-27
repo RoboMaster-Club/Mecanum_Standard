@@ -16,6 +16,7 @@
 #include "usart.h"
 #include "Board_A_IMU.h"
 #include "User_Defined_Math.h"
+#include "Referee_System.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -30,12 +31,14 @@
 
 typedef struct
 {
-	uint8_t Rx_Buffer[12];
-	uint8_t Tx_Buffer[40];
+	uint8_t Rx_Buffer[12]; //receive buffer
+	uint8_t Tx_Buffer[40]; //transmit buffer
 	
 	struct
 	{
 		uint8_t Team_Color; //0 for red, 1 for blue
+		uint8_t Match_Start; //0 for not started, 1 for started
+		uint16_t Player_Health; 
 		float Pitch_Angle;
 		float Pitch_Angular_Rate;
 		float Yaw_Angular_Rate;
@@ -44,7 +47,10 @@ typedef struct
 	struct
 	{
 		uint8_t Frame_ID;
-		uint8_t Frame_Type; //0 for autoaiming, 1 for navigation, 2 for heart beat
+		uint8_t Frame_Type;
+			//0 for autoaiming
+			//1 for navigation
+			//2 for heart beat
 		
 		struct
 		{
@@ -67,6 +73,7 @@ typedef struct
 			uint8_t c;
 			uint8_t d;
 		}Heart_Beat;
+		
 		
 		union
 		{

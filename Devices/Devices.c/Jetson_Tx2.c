@@ -79,9 +79,15 @@ void Jetson_Tx2_Send_Data(void)
 	Tx2_Data.Sending.Pitch_Angle = VAL_LIMIT(128 + Board_A_IMU.Export_Data.Pitch,255,0);
 	Tx2_Data.Sending.Pitch_Angular_Rate = VAL_LIMIT(128 + Board_A_IMU.Export_Data.Gyro_Pitch,255,0);
 	Tx2_Data.Sending.Yaw_Angular_Rate = VAL_LIMIT(128 + Board_A_IMU.Export_Data.Gyro_Yaw,255,0);
+	Tx2_Data.Sending.Team_Color = Referee_System.Referee_Robot_State.ID > 100;
+	Tx2_Data.Sending.Match_Start = Referee_System.Game_Status.Progress == 4;
+	Tx2_Data.Sending.Player_Health = Referee_System.Robot_State.Remaining_HP;
+	
 	Tx2_Data.Tx_Buffer[0] = 0xAA;
 	Tx2_Data.Tx_Buffer[1] = (uint8_t)Tx2_Data.Sending.Pitch_Angle;
 	Tx2_Data.Tx_Buffer[2] = (uint8_t)Tx2_Data.Sending.Pitch_Angular_Rate;
 	Tx2_Data.Tx_Buffer[3] = (uint8_t)Tx2_Data.Sending.Yaw_Angular_Rate;
 	Tx2_Data.Tx_Buffer[4] = Tx2_Data.Sending.Team_Color;
+	Tx2_Data.Tx_Buffer[5] = Tx2_Data.Sending.Match_Start;
+	Tx2_Data.Tx_Buffer[6] = Tx2_Data.Sending.Player_Health;
 }

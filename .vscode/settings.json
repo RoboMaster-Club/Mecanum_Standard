@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "board_a_imu.h": "c",
+        "usart.h": "c",
+        "shooting_control.h": "c"
+    }
+}
